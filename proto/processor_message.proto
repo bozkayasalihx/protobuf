@@ -1,10 +1,8 @@
 syntax = "proto3";
 
-package techschool.pcbook;
+package pb;
 
-option go_package = "pb";
-option java_package = "com.gitlab.techschool.pcbook.pb";
-option java_multiple_files = true;
+option go_package = "./;pb";
 
 import "memory_message.proto";
 
