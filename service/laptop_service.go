@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"errors"
 	"log"
 
 	"github.com/bozkayasalihx/protobuf/pb"
@@ -14,7 +15,7 @@ import (
 
 
 type LaptopServer struct {
-  store LaptopStore
+  laptopStore LaptopStore
 }
 
 func NewLaptopServer() *LaptopServer {
@@ -32,6 +33,16 @@ func (server *LaptopServer) CreateLaptop(ctx context.Context, req *pb.CreateLapt
       id, _ := uuid.NewRandom()
       laptop.Id  = id.String()
     }
+  }
+
+
+  err := server.laptopStore.Save(laptop)
+  if err != nil {
+    code := codes.Internal
+    if errors.Is(err, AllreadyExists) {
+      code = codes.AlreadyExists
+    }
+    return nil, status.Error(code, "couldn't save data to db")
   }
 
 

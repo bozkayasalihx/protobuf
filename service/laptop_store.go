@@ -38,8 +38,8 @@ func (store *InMemoryLaptopStore) Save(l *pb.Laptop) error {
     return AllreadyExists
   }
   copy := util.DeepCopy(l)
-  store.data[copy] = l
-  return nil;
+  store.data[copy.Id] = copy
+  return nil
 }
 
 
