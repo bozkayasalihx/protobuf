@@ -1,6 +1,10 @@
 package sample
 
-import "github.com/bozkayasalihx/protobuf/pb"
+import (
+
+	"github.com/bozkayasalihx/protobuf/pb"
+	"github.com/google/uuid"
+)
 
  
 func NewKeyboard() *pb.Keyboard {
@@ -60,6 +64,32 @@ func NewHDD() *pb.Storage {
       Unit: pb.Memory_GIGABYTE,
     },
     Driver: pb.Storage_HDD,
+  }
+}
+
+
+func NewLaptop() *pb.Laptop {
+  id ,_ := uuid.NewRandom()
+  
+  return &pb.Laptop{
+      Id: id.String(), 
+      Brand: randomStringFromFields("Intel", "AMD"),
+      Name: randomString(6),
+      Cpu: NewCPU(), 
+      Ram:  NewRAM(), 
+      Gpus: []*pb.GPU{NewGPU(), NewGPU()}, 
+      Storages: []*pb.Storage{NewSSD(), NewHDD()},
+      Screen: &pb.Screen{
+        SizeInch: float32(10) , 
+        Resolution: &pb.Screen_Resolution{
+          Width: 100,
+          Height: 100, 
+        },
+        Multitouch: true,
+      }, 
+      Keyboard: NewKeyboard(), 
+      PriceUsd: float64(randomInt(1500, 3000)), 
+      ReleaseYear: uint32(10),
   }
 }
 

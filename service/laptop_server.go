@@ -13,13 +13,14 @@ import (
 )
 
 
-
 type LaptopServer struct {
   laptopStore LaptopStore
 }
 
-func NewLaptopServer() *LaptopServer {
-	return &LaptopServer{}
+func NewLaptopServer(store LaptopStore) *LaptopServer {
+	return &LaptopServer{
+    laptopStore: store,
+  }
 }
 
 func (server *LaptopServer) CreateLaptop(ctx context.Context, req *pb.CreateLaptopRequest) (*pb.CreateLaptopResponse ,error) {
@@ -44,9 +45,11 @@ func (server *LaptopServer) CreateLaptop(ctx context.Context, req *pb.CreateLapt
     }
     return nil, status.Error(code, "couldn't save data to db")
   }
+  
+  log.Printf("saved laptop with id: %s", laptop.Id)
 
-
-
-  return nil ,nil
-
+  res := &pb.CreateLaptopResponse{
+    Id: laptop.Id,
+  }
+  return res, nil
 }
