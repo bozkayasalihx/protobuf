@@ -1,7 +1,5 @@
 package main
 
-import "fmt"
-
 func main() {
-	fmt.Println("Hello world")
+  // create mock grpc client and server implementaiton  
 }
