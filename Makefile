@@ -6,3 +6,5 @@ clean:
 
 run:
 	go run main.go 
+
+.PHONY: run clean gen
